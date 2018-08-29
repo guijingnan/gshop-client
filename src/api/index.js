@@ -6,10 +6,9 @@ export const reqCategorys=()=>ajax(BASE+'/index_category');
 export const reqshops = (latitude,longitude)=>ajax(BASE+'/shops',{latitude,longitude})
 /*4、根据经纬度和关键字搜索商铺列表*/
 export const reqSearchShops= (geohash,keyword)=>ajax(BASE+'/search_shops',{geohash,keyword});
-/*5、获取一次性验证码*/
-export const reqCaptcha = () =>ajax(BASE+'/captcha');
+
 /*6、用户名密码登陆*/
-export const reqLogin_pwd = (name,pwd) =>ajax(BASE+'/login_pwd',{name,pwd},'POST');
+export const reqLogin_pwd = ({name,pwd,captcha}) =>ajax(BASE+'/login_pwd',{name,pwd,captcha},'POST');
 /*7、发送短信验证码*/
 export const reqSendcode = (phone) =>ajax(BASE+'/sendcode',{phone});
 /*8、手机号验证码登陆*/
