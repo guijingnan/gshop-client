@@ -47,7 +47,7 @@
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
-      <a href="javascript:" class="go_back">
+      <a href="javascript:" class="go_back" @click="$router.back()">
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
@@ -135,7 +135,7 @@
         if(result.code===0){
           const user = result.data;
           console.log(user);
-          this.$store.dispatch('getUser',user);
+          this.$store.dispatch('saveUser',user);
           this.$router.replace('/profile')
         }else{
           this.alertMsg(result.msg)

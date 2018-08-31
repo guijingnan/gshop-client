@@ -17,3 +17,15 @@ export const reqLogin_sms = (phone,code) =>ajax(BASE+'/login_sms',{phone,code},'
 export const reqUserinfo = ()=> ajax(BASE+'/userinfo');
 
 export const reqLogout = () =>ajax(BASE+'/logout');
+export const reqShopInfo = () => ajax('/info')
+
+/**
+ * 获取商家评价数组
+ */
+export const reqShopRatings = () => ajax('/ratings')
+
+/**
+ * 获取商家商品数组
+ */
+export const reqShopGoods = () => ajax('/goods')
+

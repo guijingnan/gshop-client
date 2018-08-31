@@ -1,9 +1,24 @@
-import {reqAddress,reqCategorys,reqshops} from '../api'
+import {
+  reqAddress,
+  reqCategorys,
+  reqshops,
+  reqUserinfo,
+  reqLogout,
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
+} from '../api'
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
-  RECEIVE_USER} from './mutation-types'
+  RECEIVE_USER,
+  RESET_USER,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO
+  } from './mutation-types'
+import axios from 'axios'
 export default {
   async getAddress({commit,state}){
     const {latitude,longitude} = state;
@@ -23,7 +38,40 @@ export default {
     const shops = result.data
     commit(RECEIVE_SHOPS,{shops})
   },
-  getUser({commit},user){
+  saveUser({commit},user){
     commit(RECEIVE_USER,{user})
+  },
+  async getUser({commit}){
+    const result = await reqUserinfo();
+    const user = result.data;
+    commit(RECEIVE_USER,{user})
+  },
+  async logout({commit}){
+    const result = await reqLogout()
+    if(result.code===0){
+      commit(RESET_USER)
+    }
+
+  },
+  async getShopGoods({commit}) {
+    const result = await reqShopGoods();
+    console.log(result)
+    if(result.code===0) {
+      const goods = result.data
+      commit(RECEIVE_GOODS, {goods})
+
+
+    }
+  },
+
+  async getShopRatings({commit}){
+    const result = await reqShopRatings();
+    const ratings = result.data
+    commit(RECEIVE_RATINGS,{ratings})
+  },
+  async getShopInfo({commit}){
+    const result = await reqShopInfo();
+    const info = result.data
+    commit(RECEIVE_INFO,{info})
   }
 }

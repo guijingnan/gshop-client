@@ -4,7 +4,10 @@ export default {
   address:{},
   categorys: [], // 分类数组
   shops: [], //商家数组
-  user:{}
+  user:{},
+  goods:[],
+  ratings:[],
+  info:{}
 
 
 }

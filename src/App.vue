@@ -6,11 +6,17 @@
 </template>
 <script>
   import FooterGuider from './components/FooterGuide/FooterGuide.vue'
-
   import {reqAddress} from './api'
+  import {reqShopInfo} from './api'
+  import axios from 'axios'
   export default {
-    mounted(){
+   async mounted(){
      this.$store.dispatch('getAddress')
+     this.$store.dispatch('getUser')
+
+     /*axios.get('/goods').then(response=>{
+       console.log(response.data)
+     })*/
     },
    components:{
      FooterGuider
