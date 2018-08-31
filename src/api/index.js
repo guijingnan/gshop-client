@@ -17,3 +17,6 @@ export const reqLogin_sms = (phone,code) =>ajax(BASE+'/login_sms',{phone,code},'
 export const reqUserinfo = ()=> ajax(BASE+'/userinfo');
 
 export const reqLogout = () =>ajax(BASE+'/logout');
+export const reqShopGoods = () =>ajax('/goods');
+export const reqShopRatings = () =>ajax('/ratings');
+export const reqShopInfo = () =>ajax('/info');
