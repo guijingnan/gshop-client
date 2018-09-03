@@ -17,7 +17,7 @@
           <li class="food-list-hook" v-for="(good,index) in goods">
             <h1 class="title">{{good.name}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods">
+              <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" @click="showFood(food)">
                 <div class="icon">
                   <img width="57" height="57"
                        :src="food.icon">
@@ -32,7 +32,7 @@
                     <span class="now">￥{{food.price}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    CartControl组件
+                    <CartControl :food="food"/>
                   </div>
                 </div>
               </li>
@@ -42,19 +42,30 @@
 
         </ul>
       </div>
+      <ShopCart/>
     </div>
+    <Food ref="food" :food="food"/>
   </div>
 
 </template>
 <script>
   import {mapState} from 'vuex'
   import BScroll from 'better-scroll'
+  import CartControl from '../../../components/CartControl/CartControl.vue'
+  import ShopCart from '../../../components/ShopCart/ShopCart.vue'
+  import Food from '../../../components/Food/Food.vue'
   export default {
     data() {
       return {
         tops:[],
-        scrollY:0
+        scrollY:0,
+        food:{}
       }
+    },
+    components:{
+      CartControl,
+      ShopCart,
+      Food
     },
     computed:{
       ...mapState(['goods']),
@@ -63,6 +74,11 @@
         const index= tops.findIndex((top,index)=>scrollY>=top && scrollY<tops[index+1]);
         this._scrollLeftList (index)
         return index
+      },
+      getFood(){
+        return this.goods.forEach(good=>{
+
+        })
       }
     },
     mounted(){
@@ -102,16 +118,25 @@
           this.tops = tops
       },
       selectItem(index){
+        /*top值是根据指定的当前下表找到对应li的高度*/
        const top=this.tops[index];
-       console.log(top)
+        /*实现立刻点击，然后currentIndex就会立刻更新*/
        this.scrollY = top
+        /*右侧根据top值跳转到制定类*/
         this.rightScroll.scrollTo(0,-top,300)
       },
       _scrollLeftList(index){
+        /*当this.leftScroll有值时才会发生滚动，因为初始化时没有数据*/
         if(this.leftScroll){
           let li = this.$refs.leftUI.querySelectorAll('.menu-item')[index];
           this.leftScroll.scrollToElement(li, 200)
         }
+      },
+      showFood(food){
+        //通过点击获取指定的food，然后更新状态，这样就可以把值传给Food
+        //this.$refs.food可以调用Food里面的方法
+        this.food = food
+        this.$refs.food.toggleShow()
       }
     }
   }

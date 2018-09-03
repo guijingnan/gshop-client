@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './mock/mockServer'
+import './filters'
 import HeaderTop from './components/HeaderTop/HeaderTop.vue'
 Vue.use(MintUI);
 Vue.component('HeaderTop',HeaderTop);

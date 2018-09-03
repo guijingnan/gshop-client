@@ -16,7 +16,10 @@ import {
   RESET_USER,
   RECEIVE_GOODS,
   RECEIVE_RATINGS,
-  RECEIVE_INFO
+  RECEIVE_INFO,
+  INCREMENT_FOOD_COUNT,
+  DECREMENT_FOOD_COUNT,
+  CLEAR_CART
   } from './mutation-types'
 import axios from 'axios'
 export default {
@@ -65,14 +68,25 @@ export default {
     }
   },
 
-  async getShopRatings({commit}){
+  async getShopRatings({commit},cb){
     const result = await reqShopRatings();
-    const ratings = result.data
-    commit(RECEIVE_RATINGS,{ratings})
+    const ratings = result.data;
+    commit(RECEIVE_RATINGS,{ratings});
+    cb && cb();
   },
   async getShopInfo({commit}){
     const result = await reqShopInfo();
     const info = result.data
     commit(RECEIVE_INFO,{info})
+  },
+  updateFoodCount({commit},{isAdd,food}){
+    if(isAdd){
+      commit(INCREMENT_FOOD_COUNT,{food})
+    }else{
+      commit(DECREMENT_FOOD_COUNT,{food})
+    }
+  },
+  clearCart({commit}){
+    commit(CLEAR_CART)
   }
 }

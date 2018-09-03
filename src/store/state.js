@@ -7,7 +7,8 @@ export default {
   user:{},
   goods:[],
   ratings:[],
-  info:{}
+  info:{},
+  shopFoods:[]
 
 
 }
