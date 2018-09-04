@@ -11,7 +11,9 @@
           <div class="delivery-money">配送费￥{{info.deliveryPrice}}</div>
         </div>
       </section>
-      <div class="split"></div>
+
+      <Split/>
+
       <section class="section">
         <h3 class="section-title">活动与服务</h3>
         <div class="activity">
@@ -23,7 +25,8 @@
           </div>
         </div>
       </section>
-      <div class="split"></div>
+
+      <Split/>
 
       <section class="section">
         <h3 class="section-title">商家实景</h3>
@@ -36,7 +39,7 @@
           </ul>
         </div>
       </section>
-      <div class="split"></div>
+      <Split/>
 
       <section class="section">
         <h3 class="section-title">商家信息</h3>
@@ -68,27 +71,26 @@
   export default {
     data() {
       return {
-        favorite: localStorage.getItem('favorite') === 'true',
+
         activeClasses:['activity-green','activity-red','activity-orange']
       }
     },
     mounted(){
-      this.$nextTick(() => {
-        if(!this.ratingsSroll || !this.picsScroll){
-          this.ratingsSroll = new BScroll(this.$refs.info, {click: true})
-          this.picsScroll = new BScroll(this.$refs.pics, {click: true, scrollX: true})
-        }
-        this.info.pics && this._setUlWidth()
-      })
+      if(!this.info.pics) {
+        return
+      }
+      /*初始化显示时，已经有数据*/
+      this._initScroll();
+
 
 
     },
     watch:{
       info(){
+        /*监视info有没有变化*/
         this.$nextTick(() => {
-          this.ratingsSroll.refresh();
-          this._setUlWidth()
-          this.picsScroll.refresh()
+          //确定数据列表有数据
+          this._initScroll();
         })
       }
       },
@@ -96,12 +98,13 @@
       ...mapState(['info'])
     },
     methods:{
-      _toggleFavorite() {
-        this.favorite = !this.favorite
-        // 保存状态
-        localStorage.setItem('favorite', this.favorite)
+      _initScroll(){
+        new BScroll(this.$refs.info, {click: true});
+        this._setUlWidth();
+        new BScroll(this.$refs.pics, {click: true, scrollX: true})
       },
       _setUlWidth () {
+        //动态设置uld的宽度，要不然不能滑动
         const ul = this.$refs.ul
         const liWidth = 120
         const space = 6
